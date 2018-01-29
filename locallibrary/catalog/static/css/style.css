@@ -1,0 +1,23 @@
+.sidebar-nev{
+    margin-top: 20px;
+    padding:0px;
+    list-style: none;
+}
+
+.top_banner{
+    width:100%;
+    display: block; 
+}
+
+.btm_static{
+    display: block;
+    position: fixed;
+    border: solid 1px #49A8BE;
+    bottom: 10px;
+    border-radius: 4px;
+    line-height: 40px;
+    text-align: center;
+    width: 80%;
+    font-size: 16px;
+    color:red;
+}

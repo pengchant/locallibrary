@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>图书馆主页</h1>
+<p>welcome to <em>LocalLibrary</em>,a very basic django website</p>
+<h2>Dynamic conent</h2>
+<p>图书馆当前的藏书情况如下：</p>
+<ul>
+    <li><strong>书籍:</strong>{{ num_books }}</li>
+    <li><strong>副本:</strong>{{ num_instances }}</li>
+    <li><strong>副本剩余:</strong>{{ num_instances_avaliable }}</li>
+    <li><strong>作者:</strong>{{ num_authors }}</li>
+    <li><strong>由陈编写的:</strong>{{ num_c_books }}</li>
+</ul>
+<p class="btm_static">你已经访问了该页面{{ num_visits }}次</p>
+{% endblock %}

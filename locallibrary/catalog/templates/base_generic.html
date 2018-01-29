@@ -4,32 +4,74 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> {% block title%}
-    <title>图书馆</title>{% endblock %}
+    <title>{{ page_title }}</title>{% endblock %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1"> {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row">
+            <img src="{% static 'img/banner.png' %}" class='top_banner' alt="" />
+        </div>
+        <div class="row">
             <div class="col-sm-2">
                 {% block sidebar %}
-                    <ul class="sidebar-nav">
-                        <li><a href="{% url 'index' %}">主页</a></li>
-                        <li><a href="">所有的书籍</a></li>
-                        <li><a href="">所有的作者</a></li>
-                    </ul>
+                <ul class="sidebar-nav">
+                    <li>
+                        <a href="{% url 'index1' %}">主页</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'books' %}">所有的书籍</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'authors' %}">所有的作者</a>
+                    </li>
+                </ul>
                 {% endblock %}
             </div>
             <div class="col-sm-10">
-                {% block content %}                    
-                {% endblock %}
+                {% block content %} {% endblock %} 
+                {% block pagination %} {% if is_paginated %} 
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                        <li>
+                            <a href="{{request.path}}?page={{page_obj.previous_page_number}}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="disabled">
+                            <a href="javascript:void(0);" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %} {% for i in page_obj.paginator.page_range %}
+                        <li class="{% if i == page_obj.number %}active{% endif %}">
+                            <a href="{{request.path}}?page={{i}}">{{i}}</a>
+                        </li>
+                        {% endfor %} {% if page_obj.has_next %}
+                        <li>
+                            <a href="{{request.path}}?page={{page_obj.next_page_number}}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="disabled">
+                            <a href="javascript:void(0);" aria-label="Previous">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav> 
+                {% endif %} {% endblock pagination %}
             </div>
-        </div>        
+        </div>
     </div>
 </body>
 
