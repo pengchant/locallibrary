@@ -20,8 +20,8 @@
         <div class="row">
             <div class="col-sm-2">
                 {% block sidebar %}
-                <ul class="sidebar-nav">
-                    <li>
+                <ul class="nav nav-pills nav-stacked" style="width:100%;">
+                    <li class="active">
                         <a href="{% url 'index1' %}">主页</a>
                     </li>
                     <li>
@@ -30,6 +30,25 @@
                     <li>
                         <a href="{% url 'authors' %}">所有的作者</a>
                     </li>
+                    {% if user.is_authenticated %}
+                        <li><a href="javascript:void(0);">用户:{{ user.get_username }}</a></li>
+                        <li><a href="{% url 'my-borrowed' %}">我借阅的书籍</a></li>
+                        <li><a href="{% url 'logout' %}?next={{request.path}}">退出</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}?next={{request.path}}">登录</a></li>
+                    {% endif %}
+                    
+                    {# 如果是图书馆的员工具有can_mark_returned的权限 #}
+                    {% if user.is_staff %}
+                        <hr />
+                        <ul class="nav nav-pills nav-stacked" >
+                            <li><a href="javascript:void(0);">员工</a></li>
+                            {% if perms.catalog.can_mark_returned %}
+                            <li><a href="{% url 'all-borrowed' %}">图书借阅情况</a></li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                    
                 </ul>
                 {% endblock %}
             </div>

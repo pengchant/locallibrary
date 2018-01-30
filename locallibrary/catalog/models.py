@@ -1,7 +1,8 @@
 from django.db import models
 from django.urls import reverse
 import uuid
-
+from django.contrib.auth.models import User
+from datetime import date
 
 
 class Genre(models.Model):
@@ -69,6 +70,8 @@ class BookInstance(models.Model):
     book = models.ForeignKey(Book,on_delete=models.SET_NULL,null = True)
     imprint = models.CharField(max_length=200)
     due_back = models.DateField(null = True,blank = True)
+    # 借阅人
+    borrower = models.ForeignKey(User,on_delete = models.SET_NULL,blank=True, null=True)
 
     # 借阅的状态
     LOAN_STATUS = (
@@ -84,6 +87,7 @@ class BookInstance(models.Model):
     class Meta:
         '''用于查询的时候的数据显示的顺序'''
         ordering = ["due_back"]
+        permissions = (("can_mark_returned","Set book as returned"),)
 
     def __str__(self):
         '''
@@ -93,6 +97,12 @@ class BookInstance(models.Model):
 
     def __unicode__(self):
         return 
+
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today()>self.due_back:
+            return True
+        return False
 
 
 class Author(models.Model):

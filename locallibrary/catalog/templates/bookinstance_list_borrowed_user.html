@@ -1,0 +1,18 @@
+{% extends 'base_generic.html' %} 
+
+{% block content %}
+    <h1>已借阅的书籍</h1>
+    {% if bookinstance_list %} 
+        <ul>
+            {% for bookinst in bookinstance_list %}
+                <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
+                    <a href="{% url 'book-detail' bookinst.book.pk %}">{{bookinst.book.title}}</a>&nbsp;({{bookinst.due_back}})
+                </li> 
+            {% endfor %} 
+        </ul>
+    {% else %}
+        <p>您当前还未曾借阅书籍</p>
+    {% endif %}
+
+{% endblock content %}
+    
