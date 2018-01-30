@@ -151,3 +151,44 @@ def renew_book_librarian(request,pk):
         'bookinst':book_inst
     })
     
+
+
+# 下面为author的增删改,生成editing view
+from django.views.generic.edit import CreateView,UpdateView,DeleteView
+from django.urls import reverse_lazy
+from .models import Author
+
+class AuthorCreate(CreateView):
+    model = Author
+    template_name = 'author_form.html'
+    fields = '__all__'
+    initial = {'date_of_death':'05/01/3000',}
+
+class AuthorUpldat(UpdateView):
+    model = Author
+    template_name = 'author_form.html'
+    fields = ['first_name','last_name','date_of_birth','date_of_death']
+
+class AuthorDelte (DeleteView):
+    model = Author
+    template_name = 'author_confirm_delete.html'
+    success_url = reverse_lazy('authors')
+
+# book的增，改，删
+class BookCreate(CreateView):
+    model = Book
+    template_name = 'book_form.html'
+    fields = "__all__"
+    permission_required = 'catalog.can_mark_returned'
+
+class BookUpdate(UpdateView):
+    model = Book
+    template_name = "book_form.html"
+    fields = '__all__'
+    permission_required = "catalog.can_mark_returned"
+
+class BookDelete(DeleteView):
+    model = Book
+    template_name = "book_confirm_delete.html"
+    success_url = reverse_lazy('books')
+    

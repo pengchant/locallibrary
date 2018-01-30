@@ -3,13 +3,21 @@
 
 {% block content %}
 <h1>作者列表</h1>
+
+{% if perms.catalog.can_mark_returned %}
+    &nbsp;<a href="{% url 'author-create' %}">添加作者</a>
+{% endif %} 
+
 {% if author_list %}
-    <ul>
-        
+    <ul> 
         {% for author in author_list %}
-            <li><a href="{{ author.get_absolute_url }}">{{author.last_name}}</a></li>
-        {% endfor %}
-            
+            <li><a href="{{ author.get_absolute_url }}">{{author.first_name}}{{author.last_name}}</a>&nbsp;&nbsp;&nbsp;&nbsp; 
+                {% if perms.catalog.can_mark_returned %}
+                    <a href="{% url 'author-update' author.pk %}">更新作者</a>|
+                    <a href="{% url 'author-delete' author.pk %}">删除作者</a>
+                {% endif %}
+            </li>
+        {% endfor %} 
     </ul>
 {% else %}
     <p>暂时没有数据</p>

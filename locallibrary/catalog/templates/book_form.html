@@ -1,0 +1,16 @@
+{% extends 'base_generic.html' %}
+
+
+{% block content %}
+    <h1>书籍的信息</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <br/>
+        <input type="submit" class="btn btn-success" value="提交" />
+    </form>
+    <br/>
+{% endblock content %}
+    

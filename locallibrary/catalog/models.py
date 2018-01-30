@@ -34,6 +34,7 @@ class Book(models.Model):
     summary = models.TextField(max_length=1000,help_text='输入书籍的描述')
     isbn = models.CharField('ISBN',max_length=13,help_text = '允许输入13位的字符<a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     genre = models.ManyToManyField(Genre,help_text='选择书籍的类别')
+    language = models.ForeignKey('Language',on_delete= models.SET_NULL,null = True,help_text='选择书籍的语言')
      
     def __str__(self):
         '''用title来表示一条book记录'''

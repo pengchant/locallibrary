@@ -45,6 +45,7 @@
                             <li><a href="javascript:void(0);">员工</a></li>
                             {% if perms.catalog.can_mark_returned %}
                             <li><a href="{% url 'all-borrowed' %}">图书借阅情况</a></li>
+                            <li></li>                          
                             {% endif %}
                         </ul>
                     {% endif %}

@@ -3,11 +3,21 @@
 
 {% block content %}
 <h1>书籍列表</h1>
+
+{% if perms.catalog.can_mark_returned %}
+    <a href="{% url 'book-create' %}">添加书籍</a>
+{% endif %}
+
 {% if book_list %}
     <ul> 
         {% for book in book_list %}
             <li>
                 <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>({{ book.author }})
+                {% if perms.catalog.can_mark_returned %}
+                    &nbsp;&nbsp;
+                    <a href="{% url 'book-update' book.pk %}">修改</a>|
+                    <a href="{% url 'book-delete' book.pk %}">删除</a>     
+                {% endif %}           
             </li>
         {% endfor %} 
     </ul>

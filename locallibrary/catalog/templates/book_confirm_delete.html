@@ -1,0 +1,13 @@
+{% extends 'base_generic.html' %}
+
+
+{% block content %}
+    <h1>删除书籍</h1>
+    <p>你确定要删除：{{ book }}?</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <br>
+        <input type="submit" class="btn btn-danger" value="是的，我确定删除">
+    </form>
+{% endblock content %}
+    
