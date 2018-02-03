@@ -33,6 +33,7 @@ class RenewBookForm(forms.Form):
     修改bookinstance的表格
     '''
     renewal_date = forms.DateField(label="日期:",
+        help_text="Enter a date between now and 4 weeks (default 3).",
         widget=forms.DateInput(attrs={
             'class':'form-control',
             'style':'width:300px',
